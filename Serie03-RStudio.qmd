@@ -52,3 +52,11 @@ results %>%
   filter(REP != "R3") %>%
   count(GROUP, ID, REP)  
 ```
+
+```{r}
+# count the number of participants in each group after suppressing ID3 and REP3
+results %>%
+  filter(ID != "ID3") %>%
+  filter(REP != "R3") %>%
+  count(GROUP) 
+```
