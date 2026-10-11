@@ -43,3 +43,12 @@ results %>%
 results %>%
   filter(ID != "ID3") %>%
   count(GROUP, REP)
+```
+We now suppress REP3 because of missing data and count again
+
+```{r}
+results %>%
+  filter(ID != "ID3") %>%
+  filter(REP != "R3") %>%
+  count(GROUP, ID, REP)  
+```
