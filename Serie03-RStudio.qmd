@@ -176,3 +176,11 @@ fig3 <- ggplot(clean_results, aes(x = ID_num, y = MovementTime, color = GROUP)) 
 
 fig3
 ````
+
+# 1.6 Export the graph as a PDF file for publication
+
+````{r save-pdf}
+ggsave("Fig3_MovementTime_ID.pdf", plot = fig3,
+       width = 8, height = 6, units = "in", device = cairo_pdf)
+````
+
