@@ -26,3 +26,10 @@ We want a table that shows the number of measures for each combination og GROUP 
 results %>%
   count(GROUP, ID )
 ```
+We suppress ID3 and count again
+
+```{r}
+results %>%
+  filter(ID !="ID3") %>%
+  count(GROUP, ID ) 
+```
