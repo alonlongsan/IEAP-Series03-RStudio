@@ -18,3 +18,11 @@ library(ez)
 # read a data file that is text with columns separated by spaces and strings as factors
 results <- read.table("data/Results.txt", header = TRUE, sep = " ", stringsAsFactors = TRUE)
 ```
+## Look at the number of measures by GROUP and ID
+
+We want a table that shows the number of measures for each combination og GROUP and ID
+
+```{r count-measures-by-group-id}
+results %>%
+  count(GROUP, ID )
+```
