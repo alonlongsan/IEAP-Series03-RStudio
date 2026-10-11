@@ -1,9 +1,3 @@
----
-title: "intro-branch"
-format: typst
-editor: visual
----
-
 # 1. Project Info
 
 Our project repository and complete version history can be found on GitHub: [IEAP-Series03-RStudio](https://github.com/alonlongsan/IEAP-Series03-RStudio)
@@ -33,3 +27,27 @@ During the execution of this assignment, we encountered several technical and sc
 - **Data Visualization:** Recreating a publication-level graph in `ggplot2` was challenging, especially mathematically calculating the linear regression equations for each group separately and successfully printing those specific text equations directly onto the graph.
 
 Working through these challenges significantly improved both our R programming skills and our practical understanding of version control using Git.
+
+------------------------------------------------------------------------
+
+# 3. Appendices
+
+## 3.1 Data Sources
+
+The dataset used in this analysis is `Results.txt`, which was provided by the professor for this assignment.
+
+## 3.2 Scientific References
+
+- Mottet, D., van Dokkum, L. E. H., Froger, J., Gouaïch, A., & Laffont, I. (2017). Trajectory formation principles are the same after mild or moderate stroke. *PLoS ONE*, 12(3): e0173674. DOI: [10.1371/journal.pone.0173674](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0173674)
+
+------------------------------------------------------------------------
+
+# 4. Grading Checklist
+
+- [x] README.md file exists and is clear.
+- [x] LICENSE file exists.
+- [x] IEAP-Series03-Rstudio.qmd (the master document) is complete.
+- [x] The corresponding PDF file is successfully generated.
+- [x] A clear git history, with meaningful commit messages.
+- [x] At least one commit per question of the report.
+- [x] A principled use of branches for parallel work.
