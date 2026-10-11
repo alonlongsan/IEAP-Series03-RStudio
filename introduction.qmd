@@ -14,8 +14,8 @@ The objective of this assignment is to reproduce the main results of a scientifi
 
 To efficiently collaborate on this project and avoid overriding each other's work, our team adopted a **Branch-based Git Workflow**. We distributed the tasks strategically across different branches:
 
-- **LONG Jiangbin (`main` branch):** Jiangbin was responsible for setting up the main architecture of the project. He initialized the GitHub repository, created the master Quarto document (`IEAP-Series03-Rstudio.qmd`), and prepared the placeholder structure for the sub-documents.
-- **BINCHE Werner (`data-cleaning` branch):** Werner created a dedicated branch to handle the data preprocessing. He was in charge of using `tidyverse` to filter out missing data (ID3 and REP3) and running the repeated-measures ANOVA using the `ez` / `rstatix` package.
+- **LONG Jiangbin (`final_part_create_pdf` branch):** Jiangbin was responsible for setting up the main architecture of the project. He initialized the GitHub repository, created the master Quarto document (`IEAP-Series03-Rstudio.qmd`), and prepared the placeholder structure for the sub-documents.
+- **BINCHE Werner (`first_part` branch):** Werner created a dedicated branch to handle the data preprocessing. He was in charge of using `tidyverse` to filter out missing data (ID3 and REP3) and running the repeated-measures ANOVA using the `ez` / `rstatix` package.
 - **CLANET Damien (`ggplot-viz` branch):** Damien worked in parallel on the visualization branch. His role was to perform the linear regressions for each group and use `ggplot2` to recreate the publication-level graph with the corresponding equations.
 
 **Merge Strategy:** Once our respective sub-documents were complete and tested locally, we integrated our work into the master Quarto document via **Pull Requests / Merging**. This ensured that the main branch remained stable and successfully rendered the final PDF.
