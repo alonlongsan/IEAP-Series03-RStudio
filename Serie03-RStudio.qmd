@@ -1,0 +1,7 @@
+---
+title: "Serie03-RStudio"
+format: html
+editor: visual
+jupyter: python3
+---
+
