@@ -60,3 +60,11 @@ results %>%
   filter(REP != "R3") %>%
   count(GROUP) 
 ```
+```{r}
+# count how many different SUBJ by GROUP
+results %>%
+  filter(ID != "ID3") %>%
+  filter(REP != "R3") %>%
+  group_by(GROUP) %>%
+  summarise(n_subj = n_distinct(SUBJ))
+```
