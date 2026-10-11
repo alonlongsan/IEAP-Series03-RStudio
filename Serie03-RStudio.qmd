@@ -12,12 +12,14 @@ library(tidyverse)
 library(ez)
 
 ```
+
 #get the data
 
 ```{r load-data}
 # read a data file that is text with columns separated by spaces and strings as factors
 results <- read.table("data/Results.txt", header = TRUE, sep = " ", stringsAsFactors = TRUE)
 ```
+
 ## Look at the number of measures by GROUP and ID
 
 We want a table that shows the number of measures for each combination og GROUP and ID
@@ -26,6 +28,7 @@ We want a table that shows the number of measures for each combination og GROUP 
 results %>%
   count(GROUP, ID )
 ```
+
 We suppress ID3 and count again
 
 ```{r}
@@ -33,6 +36,7 @@ results %>%
   filter(ID !="ID3") %>%
   count(GROUP, ID ) 
 ```
+
 We now check the REP factor
 
 ```{r check-REP}
@@ -44,6 +48,7 @@ results %>%
   filter(ID != "ID3") %>%
   count(GROUP, REP)
 ```
+
 We now suppress REP3 because of missing data and count again
 
 ```{r}
@@ -60,6 +65,7 @@ results %>%
   filter(REP != "R3") %>%
   count(GROUP) 
 ```
+
 ```{r}
 # count how many different SUBJ by GROUP
 results %>%
@@ -68,6 +74,7 @@ results %>%
   group_by(GROUP) %>%
   summarise(n_subj = n_distinct(SUBJ))
 ```
+
 We have created a clean data set
 
 ```{r}
@@ -114,8 +121,6 @@ interaction_plot_Group_ID <- ggplot(clean_results) +
 show(interaction_plot_Group_ID)
 ```
 
-
-
 ```{r linear-regression-by-group}
 clean_results <- clean_results %>%
   mutate(ID_num = as.numeric(factor(ID)))
@@ -130,3 +135,44 @@ for (g in levels(clean_results$GROUP)) {
 }
 ```
 
+# 1.5 Save a graph in a PDF file for publication
+
+````{r fig3-plot}
+# Équations de régression par GROUP (calculées, pas écrites à la main)
+eq <- clean_results %>%
+  group_by(GROUP) %>%
+  group_modify(~ {
+    m <- lm(MovementTime ~ ID_num, data = .x)
+    tibble(intercept = coef(m)[1], slope = coef(m)[2])
+  }) %>%
+  ungroup() %>%
+  mutate(label = sprintf("%s: MT = %.3f + %.3f * ID", GROUP, intercept, slope))
+
+# Limites des axes et position des équations (en haut à gauche, empilées)
+y_max <- max(clean_results$MovementTime, na.rm = TRUE)
+eq <- eq %>%
+  mutate(x = 0.55,
+         y = y_max * (0.98 - 0.07 * (row_number() - 1)))
+
+fig3 <- ggplot(clean_results, aes(x = ID_num, y = MovementTime, color = GROUP)) +
+  # moyenne +/- 0.5 SD pour chaque GROUP x ID
+  stat_summary(fun.data = mean_sdl, fun.args = list(mult = .5),
+               geom = "errorbar", width = 0.03) +
+  stat_summary(fun = mean, geom = "point", shape = 21, fill = "white", size = 3) +
+  # droites de régression par GROUP
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE, linewidth = 0.8) +
+  # équations sur le graphique
+  geom_text(data = eq, aes(x = x, y = y, label = label, color = GROUP),
+            hjust = 0, size = 3.5, inherit.aes = FALSE, show.legend = FALSE) +
+  # geom_blank pour forcer les limites des axes
+  geom_blank(data = tibble(ID_num = c(0.5, 2.5), MovementTime = c(0, y_max)),
+             aes(x = ID_num, y = MovementTime), inherit.aes = FALSE) +
+  scale_x_continuous(breaks = seq_along(levels(clean_results$ID)),
+                     labels = levels(clean_results$ID)) +
+  labs(x = "Index of difficulty (ID)",
+       y = "Movement time (s)",
+       color = "Group") +
+  theme_classic(base_size = 12)
+
+fig3
+````
