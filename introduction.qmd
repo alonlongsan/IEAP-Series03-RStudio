@@ -4,6 +4,28 @@ format: typst
 editor: visual
 ---
 
-## Quarto
+# 1. Introduction and Team Management
 
+## 1.1 Scientific Context
 
+The objective of this assignment is to reproduce the main results of a scientific article studying human motor control (Fitts's Law). Specifically, we aim to investigate whether the effect of Task Difficulty (ID) on Movement Time (MT) is the same across different experimental groups (ap, cp, pp). To answer this, we performed data reorganization, a repeated-measures ANOVA, linear regressions, and generated publication-ready plots.
+
+## 1.2 Team Management and Git Workflow Strategy
+
+To efficiently collaborate on this project and avoid overriding each other's work, our team adopted a **Branch-based Git Workflow**. We distributed the tasks strategically across different branches:
+
+- **LONG Jiangbin (`main` branch):** Jiangbin was responsible for setting up the main architecture of the project. He initialized the GitHub repository, created the master Quarto document (`IEAP-Series03-Rstudio.qmd`), and prepared the placeholder structure for the sub-documents.
+- **BINCHE Werner (`data-cleaning` branch):** Werner created a dedicated branch to handle the data preprocessing. He was in charge of using `tidyverse` to filter out missing data (ID3 and REP3) and running the repeated-measures ANOVA using the `ez` / `rstatix` package.
+- **CLANET Damien (`ggplot-viz` branch):** Damien worked in parallel on the visualization branch. His role was to perform the linear regressions for each group and use `ggplot2` to recreate the publication-level graph with the corresponding equations.
+
+**Merge Strategy:** Once our respective sub-documents were complete and tested locally, we integrated our work into the master Quarto document via **Pull Requests / Merging**. This ensured that the main branch remained stable and successfully rendered the final PDF.
+
+## 1.3 Challenges Encountered and Lessons Learned
+
+During the execution of this assignment, we encountered several technical and scientific challenges:
+
+- **Git Collaboration:** At first, coordinating the merges into the master document required careful communication. We learned that strictly isolating our code into separate sub-documents (`.qmd`) before pulling and merging is the best way to prevent merge conflicts.
+- **Data Reorganization:** We realized that real-world data is often messy. The repeated-measures ANOVA requires balanced data. Finding and removing the missing data (ID3 in group pp, and REP3) using `dplyr` was a crucial step we had to figure out.
+- **Data Visualization:** Recreating a publication-level graph in `ggplot2` was challenging, especially mathematically calculating the linear regression equations for each group separately and successfully printing those specific text equations directly onto the graph.
+
+Working through these challenges significantly improved both our R programming skills and our practical understanding of version control using Git.
