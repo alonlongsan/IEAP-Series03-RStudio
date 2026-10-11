@@ -33,3 +33,13 @@ results %>%
   filter(ID !="ID3") %>%
   count(GROUP, ID ) 
 ```
+We now check the REP factor
+
+```{r check-REP}
+results %>%
+  filter(ID !="ID3") %>%
+  count(REP)
+
+results %>%
+  filter(ID != "ID3") %>%
+  count(GROUP, REP)
