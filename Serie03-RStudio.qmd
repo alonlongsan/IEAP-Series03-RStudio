@@ -12,12 +12,14 @@ library(tidyverse)
 library(ez)
 
 ```
+
 #get the data
 
 ```{r load-data}
 # read a data file that is text with columns separated by spaces and strings as factors
 results <- read.table("data/Results.txt", header = TRUE, sep = " ", stringsAsFactors = TRUE)
 ```
+
 ## Look at the number of measures by GROUP and ID
 
 We want a table that shows the number of measures for each combination og GROUP and ID
@@ -26,6 +28,7 @@ We want a table that shows the number of measures for each combination og GROUP 
 results %>%
   count(GROUP, ID )
 ```
+
 We suppress ID3 and count again
 
 ```{r}
@@ -33,6 +36,7 @@ results %>%
   filter(ID !="ID3") %>%
   count(GROUP, ID ) 
 ```
+
 We now check the REP factor
 
 ```{r check-REP}
@@ -44,6 +48,7 @@ results %>%
   filter(ID != "ID3") %>%
   count(GROUP, REP)
 ```
+
 We now suppress REP3 because of missing data and count again
 
 ```{r}
@@ -60,6 +65,7 @@ results %>%
   filter(REP != "R3") %>%
   count(GROUP) 
 ```
+
 ```{r}
 # count how many different SUBJ by GROUP
 results %>%
@@ -68,6 +74,7 @@ results %>%
   group_by(GROUP) %>%
   summarise(n_subj = n_distinct(SUBJ))
 ```
+
 We have created a clean data set
 
 ```{r}
@@ -114,8 +121,6 @@ interaction_plot_Group_ID <- ggplot(clean_results) +
 show(interaction_plot_Group_ID)
 ```
 
-
-
 ```{r linear-regression-by-group}
 clean_results <- clean_results %>%
   mutate(ID_num = as.numeric(factor(ID)))
@@ -129,4 +134,63 @@ for (g in levels(clean_results$GROUP)) {
       round(coef(model)[2], 3), "* ID\n")
 }
 ```
+
+# 1.5 Save a graph in a PDF file for publication
+
+````{r fig3-plot}
+# Équations de régression par GROUP (calculées, pas écrites à la main)
+eq <- clean_results %>%
+  group_by(GROUP) %>%
+  group_modify(~ {
+    m <- lm(MovementTime ~ ID_num, data = .x)
+    tibble(intercept = coef(m)[1], slope = coef(m)[2])
+  }) %>%
+  ungroup() %>%
+  mutate(label = sprintf("%s: MT = %.3f + %.3f * ID", GROUP, intercept, slope))
+
+# Limites des axes et position des équations (en haut à gauche, empilées)
+y_max <- max(clean_results$MovementTime, na.rm = TRUE)
+eq <- eq %>%
+  mutate(x = 0.55,
+         y = y_max * (0.98 - 0.07 * (row_number() - 1)))
+
+fig3 <- ggplot(clean_results, aes(x = ID_num, y = MovementTime, color = GROUP)) +
+  # moyenne +/- 0.5 SD pour chaque GROUP x ID
+  stat_summary(fun.data = mean_sdl, fun.args = list(mult = .5),
+               geom = "errorbar", width = 0.03) +
+  stat_summary(fun = mean, geom = "point", shape = 21, fill = "white", size = 3) +
+  # droites de régression par GROUP
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE, linewidth = 0.8) +
+  # équations sur le graphique
+  geom_text(data = eq, aes(x = x, y = y, label = label, color = GROUP),
+            hjust = 0, size = 3.5, inherit.aes = FALSE, show.legend = FALSE) +
+  # geom_blank pour forcer les limites des axes
+  geom_blank(data = tibble(ID_num = c(0.5, 2.5), MovementTime = c(0, y_max)),
+             aes(x = ID_num, y = MovementTime), inherit.aes = FALSE) +
+  scale_x_continuous(breaks = seq_along(levels(clean_results$ID)),
+                     labels = levels(clean_results$ID)) +
+  labs(x = "Index of difficulty (ID)",
+       y = "Movement time (s)",
+       color = "Group") +
+  theme_classic(base_size = 12)
+
+fig3
+````
+
+# 1.6 Export the graph as a PDF file for publication
+
+````{r save-pdf}
+ggsave("Fig3_MovementTime_ID.pdf", plot = fig3,
+       width = 8, height = 6, units = "in", device = cairo_pdf)
+````
+
+# 1.7 Differences with the article
+
+My results lead to the same conclusion as the article: the effect of difficulty (ID) on movement time is not the same in all groups. It is much stronger in patients (group pp) than in the two control groups, which corresponds to the significant GROUP × ID interaction, F(2, 48) = 11.58, p < .001. The degrees of freedom (2, 48) are the same as in the article, so we are working on the same sample. The mean movement times are also close to those in the figure: in patients, I get about 3.15 s and 4.62 s for ID = 3.8 and 5.43 bits, compared with about 3 s and 4 s in the article.
+
+However, the regression lines are not exactly the same. My slopes are steeper than those in the article (0.898 vs 0.672 for patients, 0.165 vs 0.118 for the age-matched group, 0.123 vs 0.097 for the young group). The intercept for patients is also negative in my analysis (-0.259), whereas in the article the three lines meet close to ID = 0.
+
+I think this comes from the simplified method. I removed ID3 and REP3 to get complete data, so only two levels of ID remain. Each line therefore passes exactly through two means, and the intercept is an extrapolation far from the data: a small difference in the means changes the result a lot. With only two points, we also cannot check that the relationship is really linear. In addition, I worked with trial means, which are sensitive to extreme values in patients (up to 26 s), whereas the article used a more sophisticated method.
+
+In conclusion, the simplified method is sufficient to answer the initial question (is the effect of difficulty the same in all groups?), but it does not allow a precise estimate of the slope and intercept of Fitts' law.
 
