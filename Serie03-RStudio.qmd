@@ -12,3 +12,9 @@ library(tidyverse)
 library(ez)
 
 ```
+#get the data
+
+```{r load-data}
+# read a data file that is text with columns separated by spaces and strings as factors
+results <- read.table("data/Results.txt", header = TRUE, sep = " ", stringsAsFactors = TRUE)
+```
