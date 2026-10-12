@@ -1,0 +1,53 @@
+# 1. Project Info
+
+Our project repository and complete version history can be found on GitHub: [IEAP-Series03-RStudio](https://github.com/alonlongsan/IEAP-Series03-RStudio)
+
+# 2. Introduction and Team Management
+
+## 2.1 Scientific Context
+
+The objective of this assignment is to reproduce the main results of a scientific article studying human motor control (Fitts's Law). Specifically, we aim to investigate whether the effect of Task Difficulty (ID) on Movement Time (MT) is the same across different experimental groups (ap, cp, pp). To answer this, we performed data reorganization, a repeated-measures ANOVA, linear regressions, and generated publication-ready plots.
+
+## 2.2 Team Management and Git Workflow Strategy
+
+To efficiently collaborate on this project and avoid overriding each other's work, our team adopted a **Branch-based Git Workflow**. We distributed the tasks strategically across different branches:
+
+- **LONG Jiangbin (`final_part_create_pdf` branch):** Jiangbin was responsible for setting up the main architecture of the project. He initialized the GitHub repository, created the master Quarto document (`IEAP-Series03-Rstudio.qmd`), and prepared the placeholder structure for the sub-documents.
+- **BINCHE Werner (`first_part` branch):** Werner created a dedicated branch to handle the data preprocessing. He was in charge of using `tidyverse` to filter out missing data (ID3 and REP3) and running the repeated-measures ANOVA using the `ez` / `rstatix` package.
+- **CLANET Damien (`ggplot-viz` branch):** Damien worked in parallel on the visualization branch. His role was to perform the linear regressions for each group and use `ggplot2` to recreate the publication-level graph with the corresponding equations.
+
+**Merge Strategy:** Once our respective sub-documents were complete and tested locally, we integrated our work into the master Quarto document via **Pull Requests / Merging**. This ensured that the main branch remained stable and successfully rendered the final PDF.
+
+## 2.3 Challenges Encountered and Lessons Learned
+
+During the execution of this assignment, we encountered several technical and scientific challenges:
+
+- **Git Collaboration:** At first, coordinating the merges into the master document required careful communication. We learned that strictly isolating our code into separate sub-documents (`.qmd`) before pulling and merging is the best way to prevent merge conflicts.
+- **Data Reorganization:** We realized that real-world data is often messy. The repeated-measures ANOVA requires balanced data. Finding and removing the missing data (ID3 in group pp, and REP3) using `dplyr` was a crucial step we had to figure out.
+- **Data Visualization:** Recreating a publication-level graph in `ggplot2` was challenging, especially mathematically calculating the linear regression equations for each group separately and successfully printing those specific text equations directly onto the graph.
+
+Working through these challenges significantly improved both our R programming skills and our practical understanding of version control using Git.
+
+------------------------------------------------------------------------
+
+# 3. Appendices
+
+## 3.1 Data Sources
+
+The dataset used in this analysis is `Results.txt`, which was provided by the professor for this assignment.
+
+## 3.2 Scientific References
+
+- Mottet, D., van Dokkum, L. E. H., Froger, J., Gouaïch, A., & Laffont, I. (2017). Trajectory formation principles are the same after mild or moderate stroke. *PLoS ONE*, 12(3): e0173674. DOI: [10.1371/journal.pone.0173674](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0173674)
+
+------------------------------------------------------------------------
+
+# 4. Grading Checklist
+
+- [x] README.md file exists and is clear.
+- [x] LICENSE file exists.
+- [x] IEAP-Series03-Rstudio.qmd (the master document) is complete.
+- [x] The corresponding PDF file is successfully generated.
+- [x] A clear git history, with meaningful commit messages.
+- [x] At least one commit per question of the report.
+- [x] A principled use of branches for parallel work.
