@@ -30,24 +30,4 @@ Working through these challenges significantly improved both our R programming s
 
 ------------------------------------------------------------------------
 
-# 3. Appendices
-
-## 3.1 Data Sources
-
-The dataset used in this analysis is `Results.txt`, which was provided by the professor for this assignment.
-
-## 3.2 Scientific References
-
-- Mottet, D., van Dokkum, L. E. H., Froger, J., Gouaïch, A., & Laffont, I. (2017). Trajectory formation principles are the same after mild or moderate stroke. *PLoS ONE*, 12(3): e0173674. DOI: [10.1371/journal.pone.0173674](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0173674)
-
-------------------------------------------------------------------------
-
-# 4. Grading Checklist
-
-- [x] README.md file exists and is clear.
-- [x] LICENSE file exists.
-- [x] IEAP-Series03-Rstudio.qmd (the master document) is complete.
-- [x] The corresponding PDF file is successfully generated.
-- [x] A clear git history, with meaningful commit messages.
-- [x] At least one commit per question of the report.
-- [x] A principled use of branches for parallel work.
+# 

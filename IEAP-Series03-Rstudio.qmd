@@ -1,0 +1,42 @@
+---
+title: "IEAP-Rstudio-Series03 Assignment"
+author: 
+  - CLANET Damien
+  - LONG Jiangbin
+  - BINCHE Werner
+date: today
+format: 
+  typst:
+    toc: false
+    number-sections: true
+---
+
+<!-- 1. part 1 introduction -->
+
+{{< include introduction.qmd >}}
+
+<!-- 2. part 2 codes and analysis -->
+
+{{< include Serie03-RStudio.qmd >}}
+
+# Appendices
+
+## Data Sources
+
+The dataset used in this analysis is `Results.txt`, which was provided by the professor for this assignment.
+
+## Scientific References
+
+- Mottet, D., van Dokkum, L. E. H., Froger, J., Gouaïch, A., & Laffont, I. (2017). Trajectory formation principles are the same after mild or moderate stroke. *PLoS ONE*, 12(3): e0173674. DOI: [10.1371/journal.pone.0173674](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0173674)
+
+------------------------------------------------------------------------
+
+# Grading Checklist
+
+- [x] README.md file exists and is clear.
+- [x] LICENSE file exists.
+- [x] IEAP-Series03-Rstudio.qmd (the master document) is complete.
+- [x] The corresponding PDF file is successfully generated.
+- [x] A clear git history, with meaningful commit messages.
+- [x] At least one commit per question of the report.
+- [x] A principled use of branches for parallel work.

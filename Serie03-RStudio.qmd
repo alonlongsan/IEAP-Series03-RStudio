@@ -1,10 +1,3 @@
----
-title: "Serie03-RStudio"
-format: html
-editor: visual
-jupyter: python3
----
-
 ```{r load-library}
 #| message: false
 
@@ -135,9 +128,9 @@ for (g in levels(clean_results$GROUP)) {
 }
 ```
 
-# 1.5 Save a graph in a PDF file for publication
+# Save a graph in a PDF file for publication
 
-````{r fig3-plot}
+```{r fig3-plot}
 # Équations de régression par GROUP (calculées, pas écrites à la main)
 eq <- clean_results %>%
   group_by(GROUP) %>%
@@ -175,22 +168,21 @@ fig3 <- ggplot(clean_results, aes(x = ID_num, y = MovementTime, color = GROUP)) 
   theme_classic(base_size = 12)
 
 fig3
-````
+```
 
-# 1.6 Export the graph as a PDF file for publication
+# Export the graph as a PDF file for publication
 
-````{r save-pdf}
+```{r save-pdf}
 ggsave("Fig3_MovementTime_ID.pdf", plot = fig3,
        width = 8, height = 6, units = "in", device = cairo_pdf)
-````
+```
 
-# 1.7 Differences with the article
+# Differences with the article
 
-My results lead to the same conclusion as the article: the effect of difficulty (ID) on movement time is not the same in all groups. It is much stronger in patients (group pp) than in the two control groups, which corresponds to the significant GROUP × ID interaction, F(2, 48) = 11.58, p < .001. The degrees of freedom (2, 48) are the same as in the article, so we are working on the same sample. The mean movement times are also close to those in the figure: in patients, I get about 3.15 s and 4.62 s for ID = 3.8 and 5.43 bits, compared with about 3 s and 4 s in the article.
+My results lead to the same conclusion as the article: the effect of difficulty (ID) on movement time is not the same in all groups. It is much stronger in patients (group pp) than in the two control groups, which corresponds to the significant GROUP × ID interaction, F(2, 48) = 11.58, p \< .001. The degrees of freedom (2, 48) are the same as in the article, so we are working on the same sample. The mean movement times are also close to those in the figure: in patients, I get about 3.15 s and 4.62 s for ID = 3.8 and 5.43 bits, compared with about 3 s and 4 s in the article.
 
 However, the regression lines are not exactly the same. My slopes are steeper than those in the article (0.898 vs 0.672 for patients, 0.165 vs 0.118 for the age-matched group, 0.123 vs 0.097 for the young group). The intercept for patients is also negative in my analysis (-0.259), whereas in the article the three lines meet close to ID = 0.
 
 I think this comes from the simplified method. I removed ID3 and REP3 to get complete data, so only two levels of ID remain. Each line therefore passes exactly through two means, and the intercept is an extrapolation far from the data: a small difference in the means changes the result a lot. With only two points, we also cannot check that the relationship is really linear. In addition, I worked with trial means, which are sensitive to extreme values in patients (up to 26 s), whereas the article used a more sophisticated method.
 
 In conclusion, the simplified method is sufficient to answer the initial question (is the effect of difficulty the same in all groups?), but it does not allow a precise estimate of the slope and intercept of Fitts' law.
-
